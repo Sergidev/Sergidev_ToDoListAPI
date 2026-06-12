@@ -1,11 +1,69 @@
-/* 
+body {
+    background-color: #f5f5f5 !important;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #4d4d4d;
+}
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+.todo-title {
+    color: rgba(175, 47, 47, 0.15);
+    font-weight: 100;
+}
 
-*/
+.todo-box {
+    width: 100%;
+    max-width: 550px;
+    position: relative;
+    z-index: 2;
+}
+
+.todo-input-wrapper input::placeholder {
+    font-style: italic;
+    color: #e6e6e6;
+}
+
+.todo-item {
+    color: #4d4d4d;
+    background-color: #ffffff;
+    transition: background-color 0.2s ease;
+}
+
+.italic-text {
+    font-style: italic;
+    color: #999999 !important;
+}
+
+.todo-footer {
+    background-color: #ffffff;
+    color: #777;
+    border-top: 1px solid #e6e6e6;
+    text-align: left;
+}
+
+.delete-btn {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out, color 0.1s ease;
+}
+
+.todo-item:hover .delete-btn {
+    opacity: 0.6;
+}
+
+.delete-btn:hover {
+    opacity: 1 !important;
+}
+
+.todo-shadow-stack {
+    max-width: 550px;
+}
+
+.stack-layer-1 {
+    width: 99%;
+    height: 5px;
+    border-top: none !important;
+}
+
+.stack-layer-2 {
+    width: 98%;
+    height: 5px;
+    border-top: none !important;
+}
