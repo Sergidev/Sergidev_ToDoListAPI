@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 const TodoList = () => {
 
     const username = "SergiVG";
-    const urlAPI = `https://playground.4geeks.com/todo/todos/${username}`;
 
     const [tasks, setTasks] = useState([]);
     const [inputValue, setInputValue] = useState("");
@@ -25,6 +24,27 @@ const TodoList = () => {
             })
     };
 
+    const addTask = () => {
+        const newTask = {
+            label: inputValue.trim(),
+            is_done: false
+        };
+
+        fetch(`https://playground.4geeks.com/todo/todos/${username}`, {
+            method: "POST",
+            body: JSON.stringify(newTask),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then((resp) => {
+            if (!resp.ok) throw new Error("Error adding new task.");
+            return resp.json();
+        }).then((newTaskAdded) => {
+            getTasks();
+            setInputValue("");
+        })
+    };
+
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
     };
@@ -32,26 +52,7 @@ const TodoList = () => {
     const handleKeyDown = (event) => {
         if (event.key === "Enter") {
             if (inputValue.trim() !== "") {
-                const newTask = {
-                    label: inputValue.trim(),
-                    is_done: false
-                };
-
-                fetch(urlAPI, {
-                    method: "POST",
-                    body: JSON.stringify(newTask),
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                })
-                    .then((resp) => {
-                        if (!resp.ok) throw new Error("Error adding new task.");
-                        return resp.json();
-                    })
-                    .then((newTaskAdded) => {
-                        setTasks([...tasks, newTaskAdded]);
-                        setInputValue("");
-                    })
+                addTask();
             } else {
                 alert("Invalid task.");
             }
@@ -99,7 +100,7 @@ const TodoList = () => {
 
                 <ul className="list-unstyled mb-0">
                     {tasks.length === 0 ? (
-                        <li className="todo-item border-bottom p-3 text-muted fs-4 fw-light italic-text ps-4">No tasks, add tasks</li>
+                        <li className="todo-item border-bottom p-3 text-muted fs-4 fw-light italic-text ps-4">No tasks :)</li>
                     ) : (
                         tasks.map((task) => (
                             <li key={task.id} className="todo-item border-bottom p-3 d-flex justify-content-between align-items-center fs-4 fw-light ps-4">
